@@ -1,4 +1,4 @@
-**### Emergency Room Triage System**
+**Emergency Room Triage System**
 
 This program is designed to manage an emergency room triage system, handling patient queues, doctor registration, blood donation, and inventory management.
 
