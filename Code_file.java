@@ -110,3 +110,128 @@ public class Hospital {
             }
         }       
     }
+
+    
+    public void patientPrint() { //function to print the name of patients in the queue
+        patients temp = first;
+        if(first == null) {
+            System.out.println("No patients in queue!");
+        }
+        System.out.println("Patients in queue are as follows: ");
+        while(temp!=null) {
+            System.out.print(temp.patientName+" - ");
+            temp = temp.next;
+        }
+        System.out.println();
+    }
+
+    public void admin() { //main admin function
+        System.out.println("Enter Password");
+        String pass = inputString();
+        if(!pass.equals(password)) {
+            System.out.println("Wrong Password!");
+            return;
+        }
+        int option;
+        boolean flag = true;
+        while(flag) {
+            System.out.println("Choose one: ");
+            System.out.println("Please select an option: ");
+            System.out.println("1. Doctor's Registration");
+            System.out.println("2. Change password");
+            System.out.println("3. Inventory");
+            System.out.println("0. Exit");
+            option = input();
+            switch (option) {
+                case 1:
+                    System.out.println("Doctor's Registration");
+                    doctor();
+                    break;
+                case 2:
+                    System.out.println("Enter new Password");
+                    password = inputString();
+                    System.out.println("Password Changed.");
+                    break;
+                case 3:
+                    System.out.println("Inventory management");
+                    inventory();
+                    break;
+                case 0:
+                    System.out.println("Exited from admin panel.");
+                    flag = false;
+                    break;
+                default:
+                    System.out.println("Wrong choice!");
+            }
+        }
+    }
+
+    //blood donation part
+	public void BloodDonate(String[] bt,int[] Store ) { //main donation function 
+        System.out.println("Thank you for donating blood! Enter your blood type:");
+		Scanner s=new Scanner(System.in);
+		String key=s.nextLine();
+		int c=-1;
+		for(int i=0;i<bt.length;i++) {
+			if(key.equalsIgnoreCase(bt[i])) {
+				c=i;
+			}
+		}
+		if(c!=-1) {
+		    ++Store[c];
+		} else {
+			System.out.println("Invalid blood group enterd");
+		}
+		System.out.println("Bloodtype :"+bt[c]+" blood per unit :"+Store[c]);
+	}
+
+	public void checkBloodInventory(String[] bt, int[] store) { //function to check blood inventory
+		 System.out.println("The current inventory is as follow");
+		 for(int i=0;i<bt.length;i++) {
+			 System.out.println("Blood Group :"+bt[i]+"Blood per Unit :"+store[i]);
+		 }
+		
+	}
+	public void blood() { //main blood donation function
+		//bloods are in units
+		boolean flag=true;
+		while (flag) {
+			System.out.println("enter 0 to check inventory || enter 1 to donate || enter 2 to withdraw ||3 to exit");
+			int op=input();
+			if (op==0) {
+				checkBloodInventory(bloodtype,Store);
+			}
+			else if(op==1) {
+				BloodDonate(bloodtype,Store);
+			}
+			else if(op==2) {
+				Bloodwithdraw(bloodtype,Store);
+			}
+			else if(op==3) {
+				System.out.println("Exited;");
+			    flag=false;
+			} else {
+                System.out.println("Wrong choice");
+            }			
+		}
+	}
+
+	public void Bloodwithdraw(String []bt,int[] store) { //blood withdrawl function
+		 System.out.println("Enter the blood type you need:");
+			Scanner s=new Scanner(System.in);
+			String key=s.nextLine();
+			int c=-1;
+			for(int i=0;i<bt.length;i++) {
+				if(key.equals(bt[i])) {
+					c=i;
+				}
+			}
+			if(c==-1) {
+				System.out.println("Invalid blood group entered");
+			} else if(store[c]<1) {
+				System.out.println("Not enough blood available!");
+			} else {
+				--store[c];
+			}
+			System.out.println("Bloodtype now :"+bt[c]+" blood per unit :"+store[c]);	
+	}
