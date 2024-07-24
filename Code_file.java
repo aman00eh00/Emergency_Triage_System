@@ -235,3 +235,51 @@ public class Hospital {
 			}
 			System.out.println("Bloodtype now :"+bt[c]+" blood per unit :"+store[c]);	
 	}
+
+	
+    //doctor management
+    public void doctor() { //main doctor function
+        doctors[0] = "Dr. Ramesh Agarwal";
+        doctors[1] = "Dr. Maya Sharma";
+        doctors[2] = "Dr. Pramod Jain";
+        int len = 3;
+        printDoctors(doctors, len);
+        boolean flag = true;
+        while(flag) {
+            System.out.println("Choose one: ");
+            System.out.println("Please select an option:");
+            System.out.println("1. Doctor addition");
+            System.out.println("2. Printing names of Doctors");
+            System.out.println("0. Exit");
+            int choice = input();
+            if(choice == 0) {
+                flag = false;
+                System.out.println("Exited from doctor menu.");
+            } else if(choice == 1) { 
+                if(len == doctors.length) {
+                    System.out.println("Maximum strength reached!");
+                } else {
+                    len++;
+                    addDoctor(doctors,len);
+                    System.out.println("Doctor added: "+doctors[len-1]);
+                }
+            } else if(choice == 2) {
+                printDoctors(doctors, len);
+            } else {
+                System.out.println("Wrong choice");
+            }
+        }
+    }
+
+    public void addDoctor(String[] doc,int len) { //function to add doctors in the array
+        System.out.println("Enter the name of the Doctor");
+        doc[len-1] = inputString();
+    }
+
+    public void printDoctors(String[] doc, int len) { //function to print names of doctor
+        System.out.println("Currently our Doctors are: ");
+        for (int i = 0; i < len; i++) {
+            System.out.println(doc[i]);
+        }
+    }  
+   
