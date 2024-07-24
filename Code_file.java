@@ -281,5 +281,136 @@ public class Hospital {
         for (int i = 0; i < len; i++) {
             System.out.println(doc[i]);
         }
-    }  
+    }
+
+   //inventory management 
+   public void inventory() { //main inventory function
+        Item newItem1 = new Item("Bed", 10);
+        head = newItem1;
+        Item newItem2 = new Item("Syringe", 5);
+        newItem1.next = newItem2;
+        Item newItem3 = new Item("Glucose", 6);
+        newItem2.next = newItem3;
+        Item newItem4 = new Item("Surgical gloves", 8);
+        newItem3.next = newItem4;
+        int choice;
+        boolean flag = true;
+        while(flag) {
+            System.out.println("\n1. Add new Inventory\n2. Add Inventory quantity\n3. Remove Inventory\n4. View Inventory\n0. Exit");
+            System.out.println("Enter your choice: ");
+            choice = input();
+            if(choice == 0) {
+                flag = false;
+                System.out.println("Exited from main menu.");
+            } else if(choice == 1) { 
+                addNewInventory();
+            } else if(choice == 2) {
+                addInventory();
+            } else if(choice == 3) {
+                removeInventory();
+            } else if(choice == 4) {
+                viewInventory();
+            } else {
+                System.out.println("Wrong choice, try again");
+            }
+        }
+    }
+    Item head;
+    static class Item { //inventory item linkedlist
+        String name;
+        int quantity;
+        Item next;
+
+        Item(String name, int quantity) {
+            this.name = name;
+            this.quantity = quantity;
+            next = null;
+        }
+    }
+
+    public void viewInventory() { //function to print inventory
+        Item temp = head;
+        while(temp != null) {
+            System.out.println(temp.name+" "+temp.quantity);
+            temp = temp.next;
+        }
+    }
+
+    public void addNewInventory() { //function to add new type of inventory
+        System.out.println("Enter the item to add: ");
+        String name = inputString();
+        System.out.println("Enter the quantity: ");
+        int quantity = input();
+        Item newItem = new Item(name, quantity);
+        if(head == null) {
+            head = newItem;
+        } else {
+            Item temp = head;
+            while(temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newItem;
+        }
+        System.out.println("Inventory added successfully!");
+    }
+
+    public void addInventory() { //function to add quantity of an item in an inventory
+        System.out.println("Enter the item in which to add: ");
+        String nm = inputString();
+        System.out.println("Enter the quantity to be added: ");
+        int qty = input();
+        Item temp = head;
+        boolean flag = false;
+        while(temp != null) {
+            if((temp.name).equalsIgnoreCase(nm)) {
+                temp.quantity += qty;
+                flag = true;
+                System.out.println(temp.name+" is now "+ temp.quantity);
+                break;
+            }
+            temp = temp.next;
+        }
+        if(!flag) {
+            System.out.println("Inventory not found!");
+        }
+    }
+
+    public void removeInventory() { //function to remove quantity of an item
+        System.out.println("Enter the item in which to remove: ");
+        String name = inputString();
+        System.out.println("Enter the quantity to be removed: ");
+        int quantity = input();
+        Item temp = head;
+        boolean flag = false;
+        while(temp != null) {
+            if((temp.name).equalsIgnoreCase(name)) {
+                if(quantity <= temp.quantity) {
+                    temp.quantity -= quantity;
+                    System.out.println(temp.name +" is now "+temp.quantity);
+                } else {
+                    System.out.println("Insufficient inventory!");
+                }                
+                flag = true;
+            }
+            temp = temp.next;
+        }
+        if(!flag) {
+            System.out.println("Inventory not found!");
+        }
+    }
+
+    //function to input integers
+    public int input() { 
+		Scanner s = new Scanner(System.in);
+		int in=s.nextInt();
+		return in;
+	}
+
+    //function to input String
+    public String inputString() {
+        Scanner c = new Scanner(System.in);
+        String text = c.nextLine();
+        return text;
+    }
+}
    
